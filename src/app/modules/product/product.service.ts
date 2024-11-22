@@ -16,7 +16,8 @@ const getAllProductsFromDB = async (data: TProducts) => {
 
 //get single products service
 const getSingleProductsFromDB = async (productId: string) => {
-  const result = await Product.findOne({ productId });
+  const result = await Product.findById(productId);
+  // console.log(result);
   return result;
 };
 //update products

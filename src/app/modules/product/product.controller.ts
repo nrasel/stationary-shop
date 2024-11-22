@@ -64,11 +64,11 @@ const getSingleProducts = async (req: Request, res: Response) => {
       message: 'Product retrieved successfully',
       data: result,
     });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-unused-vars, @typescript-eslint/no-unused-vars
   } catch (err: any) {
     res.status(500).json({
       success: false,
-      message: err || 'Something went wrong!',
+      message: 'Product not found',
     });
   }
 };
