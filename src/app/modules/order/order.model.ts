@@ -1,5 +1,4 @@
 import mongoose, { model, Schema } from 'mongoose';
-import { Product } from '../product/product.model';
 import { TOrder } from './order.interface';
 
 const orderSchema = new Schema<TOrder>(
@@ -17,6 +16,7 @@ const orderSchema = new Schema<TOrder>(
     },
     product: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product',
       required: [true, 'Product ID is required'],
     },
     quantity: {
@@ -35,35 +35,6 @@ const orderSchema = new Schema<TOrder>(
   },
 );
 
-orderSchema.pre('save', async function (next) {
-  if (!this.isModified('quantity')) {
-    return next();
-  }
-  try {
-    const product = await Product.findById(this.product);
-    // console.log(product);
-    if (!product) {
-      throw new Error('Product not found.');
-    }
 
-    if (product.quantity < this.quantity) {
-      throw new Error('Insufficient stock.');
-    }
-
-    product.quantity -= this.quantity;
-    if (product.quantity === 0) {
-      product.inStock = false;
-    }
-
-    await product.save();
-    this.totalPrice = this.quantity * product.price;
-    next();
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    next(error);
-  }
-  next();
-});
 
 export const Order = model<TOrder>('Order', orderSchema);

@@ -5,9 +5,27 @@ const revenueCalculateFromOrder = async () => {
   //Aggregation pipeline
   const revenue = await Order.aggregate([
     {
+      $lookup: {
+        from: 'products',
+        localField: 'product',
+        foreignField: '_id',
+        as: 'productDetails',
+      },
+    },
+    {
+      $unwind: '$productDetails',
+    },
+    {
+      $project: {
+        totalOrderPrice: {
+          $multiply: ['$quantity', { $toDouble: '$productDetails.price' }],
+        },
+      },
+    },
+    {
       $group: {
         _id: null,
-        totalRevenue: { $sum: '$totalPrice' },
+        totalRevenue: { $sum: '$totalOrderPrice' },
       },
     },
   ]);
