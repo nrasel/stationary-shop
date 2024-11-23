@@ -41,7 +41,7 @@ orderSchema.pre('save', async function (next) {
   }
   try {
     const product = await Product.findById(this.product);
-
+    // console.log(product);
     if (!product) {
       throw new Error('Product not found.');
     }
@@ -63,10 +63,7 @@ orderSchema.pre('save', async function (next) {
   } catch (error: any) {
     next(error);
   }
-
   next();
 });
-
-
 
 export const Order = model<TOrder>('Order', orderSchema);

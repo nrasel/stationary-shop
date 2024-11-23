@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Request, Response } from 'express';
 import { productService } from './product.service';
 
@@ -14,9 +15,10 @@ const createProduct = async (req: Request, res: Response) => {
     });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
+    console.log(err.stack);
     res.status(500).json({
       success: false,
-      message: err || 'Something went wrong!',
+      message: { err, stack: err.stack },
     });
   }
 };
@@ -45,9 +47,11 @@ const getAllProducts = async (req: Request, res: Response) => {
     });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
+    console.log(err);
     res.status(500).json({
       success: false,
-      message: err || 'Something went wrong!',
+      message: 'Product not found',
+      error: err.message,
     });
   }
 };
@@ -64,7 +68,7 @@ const getSingleProducts = async (req: Request, res: Response) => {
       message: 'Product retrieved successfully',
       data: result,
     });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-unused-vars, @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
   } catch (err: any) {
     res.status(500).json({
       success: false,
@@ -86,11 +90,11 @@ const updateProducts = async (req: Request, res: Response) => {
       message: 'Products updated successfully',
       data: result,
     });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
   } catch (err: any) {
     res.status(500).json({
       success: false,
-      message: err || 'Something went wrong!',
+      message: 'Product not found',
     });
   }
 };
@@ -107,11 +111,11 @@ const deleteProducts = async (req: Request, res: Response) => {
       message: 'Product deleted successfully',
       data: {},
     });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
   } catch (err: any) {
     res.status(500).json({
       success: false,
-      message: err || 'Something went wrong!',
+      message: 'Product not found',
     });
   }
 };
