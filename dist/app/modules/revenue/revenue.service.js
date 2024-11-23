@@ -16,9 +16,27 @@ const revenueCalculateFromOrder = () => __awaiter(void 0, void 0, void 0, functi
     //Aggregation pipeline
     const revenue = yield order_model_1.Order.aggregate([
         {
+            $lookup: {
+                from: 'products',
+                localField: 'product',
+                foreignField: '_id',
+                as: 'productDetails',
+            },
+        },
+        {
+            $unwind: '$productDetails',
+        },
+        {
+            $project: {
+                totalOrderPrice: {
+                    $multiply: ['$quantity', { $toDouble: '$productDetails.price' }],
+                },
+            },
+        },
+        {
             $group: {
                 _id: null,
-                totalRevenue: { $sum: '$totalPrice' },
+                totalRevenue: { $sum: '$totalOrderPrice' },
             },
         },
     ]);

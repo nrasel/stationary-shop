@@ -10,23 +10,44 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.orderController = void 0;
+const product_model_1 = require("../product/product.model");
+const order_model_1 = require("./order.model");
 const order_service_1 = require("./order.service");
 // create product controller
 const orderCreate = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const order = req.body;
-        const result = yield order_service_1.orderService.createOrderIntoDB(order);
+        const { email, product: productId, quantity, totalPrice } = req.body;
+        // const result = await orderService.createOrderIntoDB(order);
+        const product = yield product_model_1.Product.findById(productId);
+        if (!product) {
+            throw new Error('Product not found');
+        }
+        if (product.quantity < quantity) {
+            throw new Error('Insufficient stock.');
+        }
+        const order = new order_model_1.Order({
+            email,
+            product: productId,
+            quantity,
+            totalPrice,
+        });
+        yield order.save();
+        product.quantity -= quantity;
+        if (product.quantity === 0) {
+            product.inStock = false;
+        }
+        yield product.save();
         res.status(200).json({
             success: true,
             message: 'Order created successfully',
-            data: result,
+            data: order,
         });
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }
     catch (err) {
         res.status(500).json({
             success: false,
-            message: err.message || 'Something went wrong!',
+            message: err.message,
         });
     }
 });

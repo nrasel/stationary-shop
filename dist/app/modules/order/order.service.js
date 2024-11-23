@@ -10,12 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.orderService = void 0;
+// import { TOrder } from './order.interface';
 const order_model_1 = require("./order.model");
 // create order from db
-const createOrderIntoDB = (orderData) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield order_model_1.Order.create(orderData);
-    return result;
-});
+// const createOrderIntoDB = async (orderData: TOrder) => {
+//   const result = await Order.create(orderData);
+//   return result;
+// };
 // get order
 const getOrderFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield order_model_1.Order.find();
@@ -23,6 +24,5 @@ const getOrderFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
     return result;
 });
 exports.orderService = {
-    createOrderIntoDB,
     getOrderFromDB,
 };
