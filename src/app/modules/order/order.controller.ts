@@ -22,7 +22,7 @@ const orderCreate = async (req: Request, res: Response) => {
   }
 };
 
-// get order
+// get order this is an extra feature for somekind of testing purpose
 const getOrder = async (req: Request, res: Response) => {
   try {
     const result = await orderService.getOrderFromDB();
@@ -36,7 +36,7 @@ const getOrder = async (req: Request, res: Response) => {
   } catch (err: any) {
     res.status(500).json({
       success: false,
-      message: err || 'Something went wrong!',
+      message: err.message || 'Something went wrong!',
     });
   }
 };

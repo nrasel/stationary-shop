@@ -40,18 +40,22 @@ const getAllProducts = async (req: Request, res: Response) => {
       : {};
     const result = await productService.getAllProductsFromDB(query);
 
+    if (result.length === 0) {
+      throw new Error('Product not found');
+    }
+
     res.status(200).json({
       success: true,
       message: 'Products retrieved successfully',
       data: result,
     });
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     console.log(err);
     res.status(500).json({
       success: false,
-      message: 'Product not found',
-      error: err.message,
+      message: err.message || 'Product not found',
     });
   }
 };
@@ -72,7 +76,7 @@ const getSingleProducts = async (req: Request, res: Response) => {
   } catch (err: any) {
     res.status(500).json({
       success: false,
-      message: 'Product not found',
+      message: 'Product not found!',
     });
   }
 };
@@ -94,7 +98,7 @@ const updateProducts = async (req: Request, res: Response) => {
   } catch (err: any) {
     res.status(500).json({
       success: false,
-      message: 'Product not found',
+      message: 'Product not found or invalid ID',
     });
   }
 };
