@@ -31,6 +31,7 @@ const getSingleProductsFromDB = (productId) => __awaiter(void 0, void 0, void 0,
 const updateProduct = (productId, data) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield product_model_1.Product.findByIdAndUpdate(productId, data, {
         new: true,
+        runValidators: true,
     });
     return result;
 });

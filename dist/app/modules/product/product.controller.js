@@ -94,12 +94,12 @@ const updateProducts = (req, res) => __awaiter(void 0, void 0, void 0, function*
             message: 'Products updated successfully',
             data: result,
         });
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }
     catch (err) {
         res.status(500).json({
             success: false,
-            message: 'Product not found or invalid ID',
+            message: err.message || 'Product not found or invalid ID',
         });
     }
 });

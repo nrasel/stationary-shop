@@ -17,13 +17,36 @@
   2. Get a revenue from all order.
 
 - Technology Used:
+
   - Programming Language:
+
   1.  Typescript
+
   - Backend Framework:
+
   2.  Express.js
+
   - Database:
+
   3.  MongoDB and Mongoose ODM for the Schema design
+
   - Development Tools:
+
   4.  ts-node and dotenv
+
   - Dependency:
+
   5.  npm for package manager
+
+- Software desing pattern:
+
+  1. Here i use moular pattern.
+
+- Project setting
+  1. First, i create a package.json file
+  2. then install express, mongoose, typescript, dotenv, cors and which package i need
+  3. then setup eslint for refactor code and fix error using command
+  4. After that i installed prettier, ts-noode-dev, fix formating using
+  
+- Deploy
+  1. I deployed this project on Vercel.

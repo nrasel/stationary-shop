@@ -12,11 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.orderService = void 0;
 // import { TOrder } from './order.interface';
 const order_model_1 = require("./order.model");
-// create order from db
-// const createOrderIntoDB = async (orderData: TOrder) => {
-//   const result = await Order.create(orderData);
-//   return result;
-// };
 // get order
 const getOrderFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield order_model_1.Order.find();

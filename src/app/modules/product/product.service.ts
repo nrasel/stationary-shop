@@ -24,6 +24,7 @@ const getSingleProductsFromDB = async (productId: string) => {
 const updateProduct = async (productId: string, data: TProducts) => {
   const result = await Product.findByIdAndUpdate(productId, data, {
     new: true,
+    runValidators: true,
   });
   return result;
 };
